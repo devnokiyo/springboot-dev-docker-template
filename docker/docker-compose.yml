@@ -1,0 +1,42 @@
+version: '3'
+services:
+  db:
+    build: containers/mysql
+    env_file:
+      - ./environments/common.env
+      - ./environments/db.env
+    volumes:
+      - ../volumes/db/data:/var/lib/mysql
+    ports:
+      - 3306:3306 # ホストOSのWorkBenchでDBの情報を見るために定義します。
+  app:
+    build: containers/spring
+    env_file:
+      - ./environments/common.env
+      - ./environments/db.env
+    # MavenのラッパーからSpringBootを起動します。リモートデバッグのパラメータを設定します。
+    # javaコマンドで実行してしまうとホットリロードができなくなるのでMavenで起動します。
+    # ホストOSからDockerにアクセス可能にするにはaddressの指定で"*"をつけます。(address=*:5005)
+    command: ./mvnw clean spring-boot:run -Dspring-boot.run.jvmArguments="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=*:5005"
+    volumes:
+      # 開発するSpringBootプロジェクトを丸ごと配置します。(mvnwコマンドがありますよね。)
+      - ../volumes/app:/app
+      # ./mvnw cleanでプラグイン/ライブラリなどを毎回ダウンロードすると時間が掛かるので、Mavenのローカルリポジトリを永続化します。
+      - ../volumes/app/.m2:/root/.m2
+    ports:
+      - 8080:8080 # ホストOSからlocalhost:8080でページを確認する場合に定義します。(あまりないかもしれません。)
+      - 5005:5005 # リモートデバッグ用のポートです。ホストOSのIDEからアタッチします。
+    depends_on:
+      - db
+  web:
+    build: containers/nginx
+    env_file:
+      - ./environments/common.env
+    volumes:
+      - ../volumes/web/static:/usr/share/nginx/www/ # 静的ファイルはSpringBootのプロジェクトでは管理せず、Webサーバー側で管理ます。
+      - ../volumes/web/ssl:/etc/nginx/cert/
+      - ../volumes/web/log:/var/log/nginx/
+    ports:
+      - 443:443
+    depends_on:
+      - app

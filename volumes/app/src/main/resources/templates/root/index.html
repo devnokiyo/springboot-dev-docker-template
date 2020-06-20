@@ -1,0 +1,100 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ポートフォリオサイト</title>
+<link rel="stylesheet" media="all" th:href="@{/css/ress.min.css}" />
+<link rel="stylesheet" media="all" th:href="@{/css/style.css}" />
+<script th:src="@{/js/jquery-2.1.4.min.js}"></script>
+<script th:src="@{/js/style.js}"></script>
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" th:href="@{/img/favicon.png}">
+
+</head>
+<body>
+	<header>
+		<div class="container">
+			<div class="row">
+				<div class="col span-12">
+					<div class="head">
+						<h1>
+							<a th:href="@{/}">PORTFOLIO</a>
+						</h1>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col span-12">
+					<nav>
+						<div id="open">
+							<img th:src="@{/img/button.png}">
+						</div>
+						<div id="close">
+							<img th:src="@{/img/button2.png}">
+						</div>
+						<div id="navi">
+							<ul>
+								<li><a th:href="@{/}">ホーム</a></li>
+								<li><a th:href="@{/form}">お問い合わせ</a></li>
+							</ul>
+						</div>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header>
+	<div class="mainimg">
+		<img th:src="@{/img/mainimg.jpg}" alt="メイン画像">
+	</div>
+	<main>
+		<section>
+			<div class="container">
+				<h2 class="catch">Works</h2>
+				<div class="row">
+					<div class="col span-4">
+						<figure>
+							<img th:src="@{/img/catch.jpg}" alt="画像">
+							<figcaption>キャプション</figcaption>
+						</figure>
+					</div>
+					<div class="col span-4">
+						<figure>
+							<img th:src="@{/img/catch.jpg}" alt="画像">
+							<figcaption>キャプション</figcaption>
+						</figure>
+					</div>
+					<div class="col span-4">
+						<figure>
+							<img th:src="@{/img/catch.jpg}" alt="画像">
+							<figcaption>キャプション</figcaption>
+						</figure>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col span-4">
+					<h5>フッター１</h5>
+					<p>ここにSNSやテキストなどが入ります。SNSやテキストなどが入ります。</p>
+				</div>
+				<div class="col span-4">
+					<h5>フッター２</h5>
+					<p>ここにSNSやテキストなどが入ります。SNSやテキストなどが入ります。</p>
+				</div>
+				<div class="col span-4">
+					<h5>フッター３</h5>
+					<p>ここにSNSやテキストなどが入ります。SNSやテキストなどが入ります。</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<p id="pagetop">
+		<a href="#">TOP</a>
+	</p>
+</body>
+</html>
